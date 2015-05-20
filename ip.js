@@ -4,14 +4,17 @@ function placeIPDiv() {
         chrome.extension.sendMessage({op: "is_enabled"}, function (response) {
             var ext_enabled = response.ext_enabled;
             if (ext_enabled == 1 || ext_enabled === undefined) {
-                $("body").append('<div title="点击隐藏" id="chrome-website-ip" >' + ip + '</div>');
+                $("body").append('<div title="按[ESC]隐藏，双击[F2]可复制,双击[F4]去项目主页" id="chrome-website-ip" >' + ip + '</div>');
             }
         });
     });
 }
 
-$(document).ready(placeIPDiv);
+function hideIPDiv() {
+    document.getElementById('chrome-website-ip').remove();
+}
 
+$(document).ready(placeIPDiv);
 window.lastKeyCode = 0;
 window.lastHitTime = new Date();
 
@@ -24,11 +27,24 @@ $(document).keyup(function (e) {
         now = new Date();
         timeDiff = now - window.lastHitTime;
         window.lastHitTime = now;
+
+        //  双击`F2`弹出可复制的`ip`
         if (e.keyCode == 113 && window.lastKeyCode == 113 &&  // two "F2" keystrokes
             timeDiff < 900) {             // within 900ms
             window.lastKeyCode = 0;
             window.prompt('IP of "' + window.location.host + '":',
                 document.getElementById('chrome-website-ip').innerText);
+        }
+
+        //  双击`F4` 去项目主页
+        if (e.keyCode == 115 && window.lastKeyCode == 115 && timeDiff < 900) {
+            window.lastKeyCode = 0;
+            window.open("http://git.oschina.net/surprise/Chrome.Website.Ip#git-readme");
+        }
+
+        // 再次按ESC隐藏
+        if ( e.keyCode == 27 ) {
+            hideIPDiv();
         }
     }
     window.lastKeyCode = e.keyCode;

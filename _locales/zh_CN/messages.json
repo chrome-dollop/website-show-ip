@@ -1,4 +1,4 @@
 {
-  "appName": {"message": "查看使用说明"},
-  "appDesc": {"message": "方便展示网站IP"}
+  "appName": {"message": "显示当前网站IP"},
+  "appDesc": {"message": "按[ESC]切换展示和隐藏左下角IP,双击[F2]弹出可弹出IP, 双击[F4] 去项目主页"}
 }
