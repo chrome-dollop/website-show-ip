@@ -1,4 +1,4 @@
-#chrome-website-ipaddr {
+#chrome-website-ip {
     display: inline-block;
     position: fixed;
     bottom: 15px;
@@ -24,21 +24,21 @@
     color: #fff
 }
 
-#chrome-website-ipaddr:hover {
+#chrome-website-ip:hover {
     background: rgba(0, 0, 0, .7)
 }
 
-.chrome_websiteIP_right {
+.chrome-website-ip-right {
 	right: 1%;
 }
 
-.chrome_websiteIP_left {
+.chrome-website-ip-left {
 	left: 1%;
 }
 
 /* hide if in print view */
 @media print {
-      #chrome-website-ipaddr {display:none;}
+      #chrome-website-ip {display:none;}
 }
 
 

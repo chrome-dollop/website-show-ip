@@ -1,44 +1,43 @@
 {
   "default_locale": "zh_CN",
   "name": "__MSG_appName__",
-  "version": "1.0.0",
+  "description": "__MSG_appDesc__",
+  "version": "1.0.1",
   "minimum_chrome_version": "18",
   "manifest_version": 2,
-  "description": "__MSG_appDesc__",
+  "permissions": [
+    "webRequest",
+    "tabs",
+    "ftp://*/*",
+    "http://*/*",
+    "https://*/*"
+  ],
   "icons": {
     "16": "/images/icon16.png",
     "48": "/images/icon48.png",
     "128": "/images/icon128.png"
   },
-  "permissions": [
-    "tabs",
-    "http://*/*",
-    "https://*/*",
-    "webRequest"
-  ],
   "background": {
     "scripts": ["background.js"]
   },
-  "homepage_url": "http://git.oschina.net/surprise/Chrome.Website.Ip",
-  // page_action
   "browser_action": {
-    "default_icon": "/images/icon48.png",
-    "default_popup": "popup.html",
-    "default_title": "Website IP Options"
+    "default_icon": "/images/icon19.png",
+    "default_title": "Website IP"
   },
   "content_scripts": [
     {
-      "all_frames": false,
+      "matches": [
+        "ftp://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
       "run_at": "document_end",
+      "all_frames": false,
       "js": [
         "jquery.ip.js",
         "ip.js"
       ],
-      "css": ["css/ip.css"],
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ]
+      "css": ["css/ip.css"]
     }
   ]
 }

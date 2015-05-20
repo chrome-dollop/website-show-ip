@@ -1,76 +1,63 @@
-// Add icon to URL bar
-function checkForValidUrl(tabId, changeInfo, tab) {
-    chrome.pageAction.show(tab.id);
-};
-
-// Listen for any changes to the URL of any tab
-chrome.tabs.onUpdated.addListener(checkForValidUrl);
-
-// Set the item in the localstorage
-function setItem(key, value) {
-    window.localStorage.removeItem(key);
-    window.localStorage.setItem(key, value);
+// Extract domain name (DN) from URL
+function url2dn (url) {
+	var tmpa = document.createElement('a');
+	tmpa.href = url;
+	return tmpa.host;
 }
 
-// Get the item from local storage with the specified key
-function getItem(key) {
-    var value;
-    try {
-        value = window.localStorage.getItem(key);
-    } catch (e) {
-        value = "null";
-    }
-    return value;
-}
-
-// get IP using webRequest
-var currentIPList = {};
+// maintain a dict of IPs, indexed by DN
+var ips = {};
 chrome.webRequest.onCompleted.addListener(
-    function (info) {
-        currentIPList[info.url] = info.ip;
-        return;
-    },
-    {
-        urls: [],
-        types: []
-    },
-    []
+	function (d) {
+		ips[url2dn(d.url)] = d.ip;
+		return ;
+	},
+	{
+		urls: [],
+		types: []
+	},
+	[]
 );
+
+if (localStorage["ext_enabled"] === undefined)
+	localStorage.setItem("ext_enabled", 1);
 
 // Listeners
 chrome.extension.onMessage.addListener(
-    function (request, sender, sendResponse) {
-        switch (request.name) {
+	function (request, sender, callback) {
+		switch (request.op) {
 
-            case "setOptions":
-                // request from the content script to set the options.
-                //localStorage["websiteIP_status"] = websiteIP_status;
-                localStorage.setItem("websiteIP_status", request.status);
-                break;
+		case "enable":
+			localStorage.setItem("ext_enabled", 1);
+			break;
 
-            case "getOptions":
-                // request from the content script to get the options.
-                sendResponse({
-                    enableDisableIP: localStorage["websiteIP_status"]
-                });
-                break;
+		case "disable":
+			localStorage.setItem("ext_enabled", 0);
+			break;
 
-            case "getIP":
-                var currentURL = sender.tab.url;
-                if (currentIPList[currentURL] !== undefined) {
-                    sendResponse({
-                        domainToIP: currentIPList[currentURL]
-                    });
-                } else {
-                    sendResponse({
-                        domainToIP: null
-                    });
-                }
+		case "is_enabled":
+			callback({ext_enabled: localStorage["ext_enabled"]});
+			break;
 
-                break;
+		case "getip":
+			var dn = url2dn(sender.tab.url);
+			callback({ip: ips[dn]});
+			break;
 
-            default:
-                sendResponse({});
-        }
-    }
+		default:
+			break;
+		}
+	}
 );
+
+chrome.browserAction.onClicked.addListener(function (t) {
+	e = localStorage["ext_enabled"];
+	if (e == 1) {
+		iconDetails = {path: "/images/icon19_disable.png"};
+
+	} else {
+		iconDetails = {path: "/images/icon19.png"};
+	}
+	chrome.browserAction.setIcon(iconDetails, null);
+	localStorage["ext_enabled"] = 1 - e;
+});

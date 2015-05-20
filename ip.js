@@ -1,57 +1,35 @@
-// Set variables
-var websiteIP_status, setPosition;
-var url = window.location.host;
-
-$(document).ready(function() {
-
-	chrome.extension.sendMessage({name: "getIP"}, function(response) {
-		var finalIP = response.domainToIP;
-		chrome.extension.sendMessage({name: "getOptions"}, function(response) {
-			var websiteIP_status = response.enableDisableIP;
-			if (websiteIP_status == "Disable" || typeof websiteIP_status == 'undefined') {
-				$("body").append('<div title="点击隐藏" id="chrome-website-ipaddr" >' + finalIP + '</div>');
-			}
-		});
-	});
-	
-	$("#chrome-website-ipaddr").live('click', function() {
-        $(this).hide();
-        //var ip = $(this).text();
-        //var url  = "http://ip.cn/index.php?ip=" + ip;
-        //window.open(url);
-	});
-	
-	loadOptions(); //To set default value on pop-up button
-
-});
-
-function loadOptions() {
-	chrome.extension.sendMessage({name: "getOptions"}, function(response) {
-		var enableDisableIP = response.enableDisableIP;
-		
-		// set default as disabled
-		if (typeof enableDisableIP == 'undefined') {
-			chrome.extension.sendMessage({name: "setOptions", status: 'Disable'}, function(response) {});
-		}
-	});
+function placeIPDiv() {
+    chrome.extension.sendMessage({op: "getip"}, function (response) {
+        var ip = response.ip;
+        chrome.extension.sendMessage({op: "is_enabled"}, function (response) {
+            var ext_enabled = response.ext_enabled;
+            if (ext_enabled == 1 || ext_enabled === undefined) {
+                $("body").append('<div title="点击隐藏" id="chrome-website-ip" >' + ip + '</div>');
+            }
+        });
+    });
 }
 
-// popup button clicked
-document.addEventListener('DOMContentLoaded', function () {
-	chrome.extension.sendMessage({name: "getOptions"}, function(response) {
-		$("#EnableDisableIP").val(response.enableDisableIP);
-	});
-	
-	document.querySelector('#EnableDisableIP').addEventListener('click', function() {
-		if ($('#EnableDisableIP').val() == "Disable") {
-			// save to localstore
-			chrome.extension.sendMessage({name: "setOptions", status: 'Enable'}, function(response) {});
-			$('#EnableDisableIP').val('Enable')	
-		}
-		else if ($('#EnableDisableIP').val() == "Enable") {
-			// save to localstore
-			chrome.extension.sendMessage({name: "setOptions", status: 'Disable'}, function(response) {});
-			$('#EnableDisableIP').val('Disable')
-		}
-	});
+$(document).ready(placeIPDiv);
+
+window.lastKeyCode = 0;
+window.lastHitTime = new Date();
+
+$(document).keyup(function (e) {
+    // If the 'Esc' key is pressed before the HTML (yes, HTML only) could
+    // fully load, show the IP <div> as $(document).ready() doesn't execute.
+    if (document.getElementById('chrome-website-ip') === null && e.keyCode == 27) {
+        placeIPDiv();
+    } else {
+        now = new Date();
+        timeDiff = now - window.lastHitTime;
+        window.lastHitTime = now;
+        if (e.keyCode == 113 && window.lastKeyCode == 113 &&  // two "F2" keystrokes
+            timeDiff < 900) {             // within 900ms
+            window.lastKeyCode = 0;
+            window.prompt('IP of "' + window.location.host + '":',
+                document.getElementById('chrome-website-ip').innerText);
+        }
+    }
+    window.lastKeyCode = e.keyCode;
 });
