@@ -5,6 +5,10 @@ WebsiteIP
 
 ![demo](http://git.oschina.net/surprise/Chrome.Website.Ip/raw/master/images/demo.png)
 
+## 下载地址
+
+[下载地址](http://git.oschina.net/surprise/Chrome.Website.Ip/blob/master/Chrome.Website.Ip.crx)
+
 ## 说明
 
  快捷键：
