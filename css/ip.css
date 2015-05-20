@@ -1,0 +1,45 @@
+#chrome-website-ipaddr {
+    display: inline-block;
+    position: fixed;
+    bottom: 15px;
+    left: 5px;
+    z-index: 2147483647;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0 .5em;
+    border: 0;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, .35);
+    -webkit-transition: background 1s;
+    cursor: pointer;
+    line-height: 1.3em;
+    letter-spacing: normal;
+    text-align: center;
+    text-indent: 0;
+    text-decoration: none;
+    font-family: tahoma, arial;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff
+}
+
+#chrome-website-ipaddr:hover {
+    background: rgba(0, 0, 0, .7)
+}
+
+.chrome_websiteIP_right {
+	right: 1%;
+}
+
+.chrome_websiteIP_left {
+	left: 1%;
+}
+
+/* hide if in print view */
+@media print {
+      #chrome-website-ipaddr {display:none;}
+}
+
+
+
