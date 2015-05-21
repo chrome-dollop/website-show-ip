@@ -7,7 +7,9 @@ WebsiteIP
 
 ## 下载地址
 
-[下载地址](http://git.oschina.net/surprise/Chrome.Website.Ip/blob/master/Chrome.Website.Ip.crx)
+[本地下载地址](http://git.oschina.net/surprise/Chrome.Website.Ip/blob/master/Chrome.Website.Ip.crx)
+
+[chrome商店](https://chrome.google.com/webstore/detail/occoflhjldcmhobgflkedoihgcnjjhej/)
 
 ## 说明
 
