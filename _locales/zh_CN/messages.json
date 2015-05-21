@@ -1,4 +1,5 @@
 {
-  "appName": {"message": "显示当前网站IP"},
-  "appDesc": {"message": "按[ESC]切换展示和隐藏左下角IP,双击[F2]弹出可弹出IP, 双击[F4] 去项目主页"}
+  "appName": {"message": "显示网站IP"},
+  "appDesc": {"message": "按[ESC]切换展示和隐藏IP,双击[F2]弹出可弹出IP, 双击[F4] 去项目主页"},
+  "appHoverTitle": {"message": "按[ESC]切换展示和隐藏IP,双击[F2]弹出可弹出IP, 双击[F4]去项目主页"}
 }

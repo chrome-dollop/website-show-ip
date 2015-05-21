@@ -1,10 +1,12 @@
+var appHoverTitle = chrome.i18n.getMessage('appHoverTitle');
+
 function placeIPDiv() {
     chrome.extension.sendMessage({op: "getip"}, function (response) {
         var ip = response.ip;
         chrome.extension.sendMessage({op: "is_enabled"}, function (response) {
             var ext_enabled = response.ext_enabled;
             if (ext_enabled == 1 || ext_enabled === undefined) {
-                $("body").append('<div title="按[ESC]隐藏，双击[F2]可复制,双击[F4]去项目主页" id="chrome-website-ip" >' + ip + '</div>');
+                $("body").append('<div title="' + appHoverTitle + '" id="chrome-website-ip" >' + ip + '</div>');
             }
         });
     });
