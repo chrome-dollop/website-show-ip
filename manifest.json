@@ -5,7 +5,7 @@
   "version": "1.0.2",
   "minimum_chrome_version": "18",
   "manifest_version": 2,
-  "homepage_url": "http://git.oschina.net/surprise/Chrome.Website.Ip#git-readme",
+  "homepage_url": "https://chrome.google.com/webstore/detail/occoflhjldcmhobgflkedoihgcnjjhej/",
   "permissions": [
     "webRequest",
     "tabs",
