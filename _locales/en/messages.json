@@ -1,5 +1,5 @@
 {
   "appName": {"message": "Show Website IP"},
-  "appDesc": {"message": "A Chrome extension to show website IP. [ESC] Switch Display/Hide, Double F2 to copy and Double F4 to project "},
-  "appHoverTitle": {"message": "[ESC] Switch Display/Hide, Double F2 to copy and Double F4 to project"}
+  "appDesc": {"message": "A Chrome extension to show website IP. [ESC] Switch Display/Hide, Double CLICK to copy and Double F4 to project "},
+  "appHoverTitle": {"message": "[ESC] Switch Display/Hide, Double CLICK to copy and Double F4 to project"}
 }

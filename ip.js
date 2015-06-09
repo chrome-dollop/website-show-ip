@@ -7,9 +7,21 @@ function placeIPDiv() {
             var ext_enabled = response.ext_enabled;
             if (ext_enabled == 1 || ext_enabled === undefined) {
                 $("body").append('<div title="' + appHoverTitle + '" id="chrome-website-ip" >' + ip + '</div>');
+
+                // 点击隐藏
+                $("#chrome-website-ip").on('click', function(){
+                    copy("chrome-website-ip");
+                    //hideIPDiv();
+                });
             }
         });
     });
+}
+
+function copy(id){
+    $("#" + id).select();
+    //Copy Content
+    document.execCommand("Copy", false, null);
 }
 
 function hideIPDiv() {
@@ -31,12 +43,12 @@ $(document).keyup(function (e) {
         window.lastHitTime = now;
 
         //  双击`F2`弹出可复制的`ip`
-        if (e.keyCode == 113 && window.lastKeyCode == 113 &&  // two "F2" keystrokes
+/*        if (e.keyCode == 113 && window.lastKeyCode == 113 &&  // two "F2" keystrokes
             timeDiff < 900) {             // within 900ms
             window.lastKeyCode = 0;
             window.prompt('IP of "' + window.location.host + '":',
                 document.getElementById('chrome-website-ip').innerText);
-        }
+        }*/
 
         //  双击`F4` 去项目主页
         if (e.keyCode == 115 && window.lastKeyCode == 115 && timeDiff < 900) {
