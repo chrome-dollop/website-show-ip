@@ -3,6 +3,7 @@ var appHoverTitle = chrome.i18n.getMessage('appHoverTitle');
 function placeIPDiv() {
     chrome.extension.sendMessage({op: "getip"}, function (response) {
         var ip = response.ip;
+        var dds = response.dds;
         chrome.extension.sendMessage({op: "is_enabled"}, function (response) {
             var ext_enabled = response.ext_enabled;
             if (ext_enabled == 1 || ext_enabled === undefined) {

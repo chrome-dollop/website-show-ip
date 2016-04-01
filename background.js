@@ -7,8 +7,10 @@ function url2dn (url) {
 
 // maintain a dict of IPs, indexed by DN
 var ips = {};
+var dds = {};
 chrome.webRequest.onCompleted.addListener(
 	function (d) {
+		dds[url2dn(d.url)] = d;
 		ips[url2dn(d.url)] = d.ip;
 		return ;
 	},
@@ -41,7 +43,7 @@ chrome.extension.onMessage.addListener(
 
 		case "getip":
 			var dn = url2dn(sender.tab.url);
-			callback({ip: ips[dn]});
+			callback({ip: ips[dn], dds:dds});
 			break;
 
 		default:
